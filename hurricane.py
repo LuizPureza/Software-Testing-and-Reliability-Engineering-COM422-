@@ -4,6 +4,7 @@ from Storm import Storm
 class Hurricane(Storm):
     def __init__(self, name, wind_speed):
         super().__init__(name, wind_speed)
+        self.classification = None
 
     def calculate_classification(self) -> str:
         if self.wind_speed <= 74 and self.wind_speed<= 95:
