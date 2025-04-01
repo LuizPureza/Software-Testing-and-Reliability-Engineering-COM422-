@@ -4,10 +4,9 @@ from Storm import Storm
 class Hurricane(Storm):
     def __init__(self, name, wind_speed):
         super().__init__(name, wind_speed)
-        self.classification = None
 
     def calculate_classification(self) -> str:
-        if self.wind_speed <= 74 and self.wind_speed<= 95:
+        if self.wind_speed >= 74 and self.wind_speed <= 95:
             return "Category one"
         elif self.wind_speed >= 96 and self.wind_speed<= 110:
             return "Category two"
@@ -17,7 +16,7 @@ class Hurricane(Storm):
             return "Category four"
         elif self.wind_speed > 156:
             return "Category five"
-        return "Unclassified"
+        return "Tropical Storm"
 
     def get_advice(self) -> str:
         classification = self.calculate_classification()
