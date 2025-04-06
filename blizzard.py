@@ -7,7 +7,7 @@ class Blizzard(Storm):
         super().__init__(name, wind_speed)
 
     def calculate_classification(self) -> str:
-        if self.wind_speed >= 35:
+        if self.wind_speed >= 35 and not (self.wind_speed >= 45 and self.temp <= -12):
             return "blizzard"
         elif self.wind_speed >= 45 and self.temp <= -12:
             return "Severe Blizzard"
