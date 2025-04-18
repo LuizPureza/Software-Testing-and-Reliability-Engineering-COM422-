@@ -1,27 +1,26 @@
 import pytest
 from blizzard import Blizzard
-from Storm import Storm
 
-class Test_blizzard_classification:
 
-    def test_severe_blizzard_classification(self):
-        blizzard = Blizzard("Blizzard test 1", 50, -12)
-        assert blizzard.calculate_classification() == "Severe Blizzard"
 
-    def test_blizzard_classification(self):
-        blizzard = Blizzard("Blizzard test 2",40, -5)
-        assert blizzard.calculate_classification() == "Blizzard"
+@pytest.mark.parametrize("name, wind_speed, temperature, expected_classification", [
+    ("Blizzard Severe Test", 45, -12, "Severe Blizzard"),
+    ("Blizzard Normal Test", 40, -5, "Blizzard"),
+    ("Snow Storm Test", 34, -5, "Snow Storm"),
+])
 
-    def test_snow_storm_classification(self):
-        blizzard = Blizzard("Blizzard test 3", 34, -5)
-        assert blizzard.calculate_classification() == "Snow Storm"
+def test_blizzard_classification(blizzard_instance, name, wind_speed, temperature, expected_classification):
+    """Test Blizzard classification in several scenarios"""
+    blizzard = blizzard_instance(name, wind_speed, temperature)
+    assert blizzard.calculate_classification() == expected_classification
 
-class Test_blizzard_get_advice:
+@pytest.mark.parametrize("name, wind_speed, temperature, expected_advice", [
+    ("Blizzard Severe Advice", 50, -15, "Keep warm, avoid all travel."),
+    ("Blizzard Advice", 40, -5, "Keep warm, Do not travel unless absolutely essential."),
+])
 
-    def test_severe_blizzard_advice(self):
-        blizzard = Blizzard("Blizzard test 4", 50, -15)
-        assert blizzard.get_advice() == "Keep warm, avoid all travel."
+def test_blizzard_get_advice(blizzard_instance, name, wind_speed, temperature, expected_advice):
+    """Test Blizzard advice - based on classification"""
+    blizzard = blizzard_instance(name, wind_speed, temperature)
+    assert blizzard.get_advice() == expected_advice
 
-    def test_blizzard_advice_lowercase_b(self):
-        blizzard = Blizzard("Blizzard test 5", 40, -5)
-        assert blizzard.get_advice() == "Keep warm, Do not travel unless absolutely essential."

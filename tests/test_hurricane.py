@@ -2,21 +2,25 @@ import pytest
 from hurricane import Hurricane
 
 
+@pytest.mark.parametrize("name, wind_speed, expected_category", [
+    ("Hurricane Cat5", 160, "Category five"),
+    ("Hurricane Cat4", 140, "Category four"),
+    ("Hurricane Cat3", 120, "Category three"),
+    ("Hurricane Cat2", 100, "Category two"),
+    ("Hurricane Cat1", 80, "Category one"),
+    ("Tropical Storm", 60, "Tropical Storm"),
+])
 
-class Test_hurricane_classification:
+def test_hurricane_classification(hurricane_instance, name, wind_speed, expected_category):
+    """to test multiple hurricane classifications"""
+    hurricane = hurricane_instance(name, wind_speed)
+    assert hurricane.calculate_classification() == expected_category
 
-    def test_hurricane_classification(self):
-        hurricane = Hurricane("Hurricane test 1", 74)
-        assert hurricane.calculate_classification() == "Category one"
-
-    def test_tropical_storm(self):
-        hurricane = Hurricane("Hurricane test 2", 73)
-        assert hurricane.calculate_classification() == "Tropical Storm"
-
-    def test_hurricane_category_order(self):
-        assert Hurricane("Test Cat5", 160).calculate_classification() == "Category five"
-        assert Hurricane("Test Cat4", 140).calculate_classification() == "Category four"
-        assert Hurricane("Test Cat3", 120).calculate_classification() == "Category three"
-        assert Hurricane("Test Cat2", 100).calculate_classification() == "Category two"
-        assert Hurricane("Test Cat1", 80).calculate_classification() == "Category one"
-        assert Hurricane("Test Storm", 60).calculate_classification() == "Tropical Storm"
+@pytest.mark.parametrize("name, wind_speed, expected_category", [
+    ("Hurricane Test 1", 74, "Category one"),
+    ("Hurricane Test 2", 73, "Tropical Storm"),
+])
+def test_hurricane_tropical_storm(hurricane_instance, name, wind_speed, expected_category):
+    """To test difference between Hurricane and Tropical Storm."""
+    hurricane = hurricane_instance(name, wind_speed)
+    assert hurricane.calculate_classification() == expected_category

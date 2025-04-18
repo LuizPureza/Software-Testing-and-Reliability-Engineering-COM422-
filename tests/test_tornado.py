@@ -1,26 +1,32 @@
 import pytest
 from tornado import Tornado
 
-class Test_tornado_init_parameters:
-    def test_invalid_initialization(self):
-        tornado = Tornado("Test Tornado", 150)
-        assert tornado.wind_speed == 150
-
-    def test_classification_unclassified(self):
-        tornado = Tornado("Test Tornado 2", 40)  # 40 should be classified as "F0"
-        assert tornado.calculate_classification() == "F0"
 
 
+@pytest.mark.parametrize("name, wind_speed, expected_wind_speed", [
+    ("Test Tornado", 150, 150),
+])
 
-"""Get Advice testing"""
+def test_invalid_initialization(tornado_instance, name, wind_speed, expected_wind_speed):
+    """to test tornado validating wind speed."""
+    tornado = tornado_instance(name, wind_speed)
+    assert tornado.wind_speed == expected_wind_speed
 
+@pytest.mark.parametrize("name, wind_speed, expected_classification", [
+    ("Test Tornado 2", 40, "F0"),
+])
 
-class Test_tornado_advice:
-    def test_unclassified_advice_1(self):
-        tornado = Tornado("Tornado Unclassified test 1", 230)
-        assert tornado.get_advice() == "Find underground shelter, crouch near to the floor covering your head with your hands"
+def test_classification_unclassified(tornado_instance, name, wind_speed, expected_classification):
+    """to test tornado classification thinking"""
+    tornado = tornado_instance(name, wind_speed)
+    assert tornado.calculate_classification() == expected_classification
 
-    def test_unclassified_advice_2(self):
-        tornado = Tornado("Tornado Unclassified test 2", 30)
-        advice = tornado.get_advice()
-        assert advice == "There is no need to panic"
+@pytest.mark.parametrize("name, wind_speed, expected_advice", [
+    ("Tornado Unclassified test 1", 230, "Find underground shelter, crouch near to the floor covering your head with your hands"),
+    ("Tornado Unclassified test 2", 30, "There is no need to panic"),
+])
+
+def test_tornado_advice(tornado_instance, name, wind_speed, expected_advice):
+    """to test tornado advice using various wind speeds."""
+    tornado = tornado_instance(name, wind_speed)
+    assert tornado.get_advice() == expected_advice
