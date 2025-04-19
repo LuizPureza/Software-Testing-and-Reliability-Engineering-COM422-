@@ -10,7 +10,7 @@ from blizzard import Blizzard
 ])
 
 def test_blizzard_classification(blizzard_instance, name, wind_speed, temperature, expected_classification):
-    """Test Blizzard classification in several scenarios"""
+    """tests blizzard classification in several scenarios"""
     blizzard = blizzard_instance(name, wind_speed, temperature)
     assert blizzard.calculate_classification() == expected_classification
 
@@ -20,7 +20,7 @@ def test_blizzard_classification(blizzard_instance, name, wind_speed, temperatur
 ])
 
 def test_blizzard_get_advice(blizzard_instance, name, wind_speed, temperature, expected_advice):
-    """Test Blizzard advice - based on classification"""
+    """tests blizzard advice - based on classification"""
     blizzard = blizzard_instance(name, wind_speed, temperature)
     assert blizzard.get_advice() == expected_advice
 

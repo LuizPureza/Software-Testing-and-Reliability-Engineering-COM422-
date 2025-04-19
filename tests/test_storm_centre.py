@@ -6,8 +6,8 @@ from hurricane import Hurricane
 
 
 @pytest.mark.parametrize("num_storms, expected_result", [
-    (20, True),  # Adding 20 storms should succeed
-    (21, False)  # Adding the 21st storm should fail
+    (20, True),
+    (21, False)
 ])
 
 def test_add_more_than_20_storms(storm_centre, storm_instance, num_storms, expected_result):
@@ -26,19 +26,20 @@ def test_remove_storm_returns_true_when_removed(storm_centre, storm_instance):
 
     assert storm_centre.remove_storm("Test remove Storm") is True
     assert len(storm_centre.storm_list) == 0
+
 def test_add_storm_hurricane_class_instance(storm_centre, storm_instance):
-    """to test that stor_centre successfully adds a Hurricane instance"""
+    """to test stor_centre successfully adds a Hurricane instance"""
     hurricane = storm_instance(Hurricane, "Cyclone", 120)
     assert storm_centre.add_storm(hurricane) is True
     assert storm_centre.storm_list[0].name == "Cyclone"
 
 class FakeStorm:
-    """fake storm class to test invalid storm additions"""
+    """fake storm class to test invalid storms"""
     def __init__(self, name, wind_speed):
         self.name = name
         self.wind_speed = wind_speed
 
 def test_add_storm_invalid_type(storm_centre):
-    """test to see if storm_centre will reject invalid storm objects"""
+    """test to see if storm_centre will reject invalid storm"""
     fake_storm = FakeStorm("Fake Storm", 123)
     assert storm_centre.add_storm(fake_storm) is False

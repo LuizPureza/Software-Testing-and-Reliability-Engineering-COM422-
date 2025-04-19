@@ -21,6 +21,6 @@ def test_hurricane_classification(hurricane_instance, name, wind_speed, expected
     ("Hurricane Test 2", 73, "Tropical Storm"),
 ])
 def test_hurricane_tropical_storm(hurricane_instance, name, wind_speed, expected_category):
-    """To test difference between Hurricane and Tropical Storm."""
+    """to test difference between Hurricane and Tropical Storm"""
     hurricane = hurricane_instance(name, wind_speed)
     assert hurricane.calculate_classification() == expected_category
